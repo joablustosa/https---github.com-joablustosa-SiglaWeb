@@ -354,9 +354,7 @@ export class FuncaoPerfilComponent implements OnInit {
   }
 
   salvarPerfilFuncao() {
-
-    console.log(this.tempFuncaoSelecionada);
-
+    this.spinner.show();
     for (var i = 0; i < this.tempFuncaoSelecionada.length; i++) {
       if (this.tempFuncaoSelecionada[i].flgpermissao != '') {
         var funcaoPerfilTemp = Object.assign({
@@ -392,9 +390,11 @@ export class FuncaoPerfilComponent implements OnInit {
         .subscribe(
           () => {
             this.toastr.success('Permissão foi salva');
+            this.spinner.hide();
           },
           () => {
             this.toastr.warning('Não foi possível salvar');
+            this.spinner.hide();
           }
         );
     }
