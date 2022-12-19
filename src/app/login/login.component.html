@@ -1,0 +1,129 @@
+<div id="formContent">
+  <div class="fadeIn first">
+    <img src="../../assets/img/Icone.png" alt="Logo SIGLA" width="80px" /><br />
+  </div>
+  <form [formGroup]="loginForm" class="fadeIn second">
+    <div class="col-sm-12">
+      <mat-form-field appearance="fill" required>
+        <mat-label><mat-icon>person</mat-icon>Usuário</mat-label>
+        <input matInput formControlName="cpf" />
+      </mat-form-field>
+    </div>
+
+    <div class="col-sm-12">
+      <mat-form-field appearance="fill" required>
+        <mat-label><mat-icon>lock</mat-icon>Senha</mat-label>
+        <input
+          matInput
+          [type]="show ? 'text' : 'password'"
+          formControlName="senha"
+        />
+        <button mat-icon-button matSuffix (click)="showPassword()">
+          <mat-icon class="iconstyle">{{
+            show ? "visibility" : "visibility_off"
+          }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div class="col-sm-12">
+      <mat-form-field appearance="fill" required>
+        <mat-label style="color: rgb(109, 129, 109)">
+          <mat-icon>class</mat-icon>Perfil de acesso</mat-label
+        ><mat-select formControlName="dominio">
+          <mat-option value="1">Funcionário</mat-option>
+          <mat-option value="2">Tripulante</mat-option>
+          <mat-option value="3">Rodoviária</mat-option>
+          <mat-option value="5">Administrador Mobile</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-sm-12">
+      <input
+        [disabled]="loginForm.invalid"
+        (click)="confirmaLogin(changePassword)"
+        type="button"
+        class="fadeIn fourth"
+        value="Entrar"
+      />
+    </div>
+  </form>
+</div>
+
+<div
+  bsModal
+  #changePassword="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Cadastro"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content modal-sm">
+      <div class="modal-header">
+        <p class="modal-title">Alteração de senha no primeiro acesso</p>
+        <p></p>
+      </div>
+
+      <div class="modal-body">
+        <form class="example-form" [formGroup]="newPasswordForm">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Senha atual</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="senhaAtual"
+              required
+            />
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Nova senha</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="novaSenha"
+              required
+            />
+            <mat-error *ngFor="let validation of validation_messages.password">
+              <mat-error
+                class="error-message"
+                *ngIf="
+                  newPasswordForm.get('novaSenha')!.hasError(validation.type) &&
+                  (newPasswordForm.get('novaSenha')!.dirty ||
+                    newPasswordForm.get('novaSenha')!.touched)
+                "
+                >{{ validation.message }}</mat-error
+              >
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Confirmar nova senha</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="confirmacaoNovaSenha"
+              [errorStateMatcher]="matcher"
+              required
+            />
+            <mat-error *ngIf="newPasswordForm.hasError('notSame')">
+              As senhas devem ser iguais
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          [disabled]="newPasswordForm.invalid"
+          type="button"
+          (click)="confirmaAtualizaSenha(changePassword)"
+          class="btn btn-info"
+        >
+          Confirmar alteração de senha
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

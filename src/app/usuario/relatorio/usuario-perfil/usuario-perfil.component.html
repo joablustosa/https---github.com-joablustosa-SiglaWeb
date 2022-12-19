@@ -1,0 +1,199 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start">
+    <div class="col-sm-5">
+      <div class="d-flex justify-content-start">
+        <h2 style="padding-left: 10px">
+          Relatório de Perfis Associados a Usuários
+        </h2>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <div class="d-flex justify-content-end">
+        <nav aria-label="breadcrumb">
+          <button
+            matTooltip="Exportar para CSV"
+            matTooltipPosition="above"
+            class="btn btn-secondary rounded-0"
+            type="button"
+            (click)="downloadCsv()"
+          >
+            <img
+              src="../../../../assets/img/excel.png"
+              width="20px"
+            />
+          </button>
+          <button
+            matTooltip="Exportar para PDF"
+            matTooltipPosition="above"
+            class="btn btn-success rounded-0"
+            type="button"
+            (click)="downloadPdf()"
+          >
+            <img
+              src="../../../../assets/img/pdf.png"
+              width="20px"
+            />
+          </button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card" id="modalOpen">
+    <mat-tab-group>
+      <!-- TAB Usuário -->
+      <mat-tab label="Usuário">
+        <div class="card-body">
+          <form [formGroup]="registerForm">
+            <div class="row">
+              <div class="col-sm">
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  style="width: 100%"
+                >
+                  <mat-label>Usuário (opcional)</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    [formControl]="controlUsuario"
+                    [matAutocomplete]="autoGroup"
+                  />
+                  <mat-autocomplete
+                    #autoGroup="matAutocomplete"
+                    [displayWith]="exibeUsuario"
+                  >
+                    <mat-option
+                      *ngFor="let usuario of usuariosFiltrados | async"
+                      [value]="usuario"
+                    >
+                      {{ usuario?.usuario }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <button
+                      mat-raised-button
+                      style="padding: 8px"
+                      color="primary"
+                      (click)="consultarRelatorioPerfilUsuario()"
+                    >
+                      Consultar
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+      <!-- TAB Perfil -->
+      <mat-tab label="Perfil">
+        <div class="card-body">
+          <form [formGroup]="registerForm">
+            <div class="row">
+              <div class="col-sm">
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  style="width: 100%"
+                >
+                  <mat-label>Perfil (opcional)</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    [formControl]="controlPerfil"
+                    [matAutocomplete]="auto"
+                  />
+                  <mat-autocomplete
+                    #auto="matAutocomplete"
+                    [displayWith]="exibePerfil"
+                  >
+                    <mat-option
+                      *ngFor="let perfil of perfisFiltrados | async"
+                      [value]="perfil"
+                    >
+                      {{ perfil?.descrperfil }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="col-sm-2">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <button
+                      mat-raised-button
+                      style="padding: 8px"
+                      color="primary"
+                      (click)="consultarRelatorioPerfilUsuario()"
+                    >
+                      Consultar
+                      <mat-icon>search</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="card-footer">
+      <mat-paginator [pageSize]="50" [pageSizeOptions]="[50, 100, 150]">
+      </mat-paginator>
+      <table
+        mat-table
+        [dataSource]="usuarioPerfis"
+        matSort
+        class="table-responsive table-condensed"
+        id="tabelaLog"
+      >
+        <!-- Coluna nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+        </ng-container>
+
+        <!-- Coluna perfil -->
+        <ng-container matColumnDef="descrperfil">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Perfil</th>
+          <td class="table-responsive" mat-cell *matCellDef="let element">
+            {{ element.descrperfil }}
+          </td>
+        </ng-container>
+
+        <!-- Coluna usuário -->
+        <ng-container matColumnDef="usuario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuário</th>
+          <td mat-cell *matCellDef="let element">{{ element.usuario }}</td>
+        </ng-container>
+
+        <!-- Coluna último login -->
+        <ng-container matColumnDef="ultlogin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Último Login
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ultlogin | date: "dd/MM/YYYY HH:mm" }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="nomeColunas"></tr>
+        <tr mat-row *matRowDef="let row; columns: nomeColunas"></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-atom"
+>
+</ngx-spinner>

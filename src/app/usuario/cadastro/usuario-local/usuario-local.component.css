@@ -1,0 +1,116 @@
+section {
+  display: table;
+}
+
+table {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+th.mat-header-cell {
+  color: white;
+  max-width: 200px;
+  background-color: #2a9e51;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+:host ::ng-deep .mat-header-row {
+  height: 45px;
+}
+
+:host ::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+mat-paginator {
+  width: 100%;
+}
+
+/* MAT ROW COLOR */
+.mat-row:nth-child(2n+1) {
+  background-color: #00000010;
+}
+
+.mat-row:not(:nth-child(2n+1)) {
+  background-color: #00000020;
+}
+
+mat-label {
+  color: rgb(109, 129, 109);
+}
+
+.mat-table {
+  border-radius: 8px;
+  overflow: hidden !important;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+/* COLUMNS */
+.mat-column-usuarioaerop {
+  padding: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.mat-column-nome {
+  padding: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.mat-column-flgaltera {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.mat-column-seqgrupo {
+  padding: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.mat-column-acoes {
+  text-align: center;
+}
+
+/* ROW */
+.mat-row {
+  height: 25px;
+}
+
+.text-white-b {
+  font-size: 18px;
+  padding: 16px;
+}
+
+.btn-noborder {
+  border: none;
+}
+
+.flagaltera {
+  color: #2d8149;
+}
+
+.no-padding-top {
+  padding-top: 0;
+  margin-top: -10px;
+}
+
+/* PAGINATOR */
+::ng-deep .mat-paginator-page-size-select {
+  width: 26px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: transparent;
+}
+
+::ng-deep .mat-paginator-container {
+  background-color: #f7f7f8;
+}
+
+/* OTHERS */
+.card-body {
+  margin-bottom: -16px;
+}

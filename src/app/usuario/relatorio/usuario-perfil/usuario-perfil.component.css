@@ -1,0 +1,95 @@
+section {
+  display: table;
+}
+
+table {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+th.mat-header-cell {
+  color: white;
+  max-width: 200px;
+  background-color: #2a9e51;
+}
+
+
+:host ::ng-deep .mat-sort-header-arrow {
+  color: white !important;
+}
+
+
+mat-paginator {
+  width: 100%;
+}
+
+/* MAT ROW COLOR */
+.mat-row:nth-child(2n+1) {
+  background-color: #00000007;
+}
+
+.mat-row:not(:nth-child(2n+1)) {
+  background-color: #00000017;
+}
+
+mat-label {
+  color: rgb(109, 129, 109);
+}
+
+.mat-table {
+  border-radius: 8px;
+  overflow: hidden !important;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+/* COLUMNS */
+
+.mat-column-dthrinativado {
+  padding: 10px;
+}
+
+/* ROW */
+.mat-row {
+  cursor: pointer;
+}
+
+/* Material tab style */
+:host ::ng-deep .mat-tab-labels {
+  background-color: #2a9e51;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+:host ::ng-deep .mat-tab-label {
+  color: white;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
+  background-color: #ffffff00 !important;
+}
+
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  background-color: #1e6b38;
+  color: rgb(255, 255, 255);
+  opacity: 1;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+/* PAGINATOR */
+::ng-deep .mat-paginator-page-size-select {
+  width: 26px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: transparent;
+}
+
+::ng-deep .mat-paginator-container {
+  background-color: #f7f7f8;
+}

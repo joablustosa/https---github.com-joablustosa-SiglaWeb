@@ -1,0 +1,25 @@
+table.dataTable th, table.dataTable td {
+    -webkit-box-sizing: content-box;
+    box-sizing: 10px;
+}
+
+table th{
+    font-size: small;
+}
+table th, tr{
+    font-size: small;
+}
+
+.mat-tab-group {
+    margin-bottom: 48px;
+    font-size: small;
+    color: green;
+}
+
+.searchable_select .ng-input {
+    display: flex;
+    align-items: center;
+}
+.form-select{
+    font-size: small;
+}

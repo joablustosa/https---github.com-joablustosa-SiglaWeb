@@ -1,0 +1,204 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-start">
+      <h4>Registro de Ponto</h4>
+    </div>
+  </div>
+</div>
+<div class="container-fluid p-2">
+  <nav aria-label="breadcrumb">
+    <button class="btn btn-warning rounded-0" type="button" data-coreui-toggle="modal" data-coreui-target="#modalOpen"><i class="cil-folder-open nav-icon"></i></button>
+    <button class="btn btn-success rounded-0" type="button"><i class="cil-print nav-icon"></i></button>
+    <button class="btn btn-secondary rounded-0" type="button"><i class="cil-arrow-thick-to-left nav-icon"></i></button>
+    <button class="btn btn-secondary rounded-0" type="button"><i class="cil-caret-left nav-icon"></i></button>
+    <button class="btn btn-secondary rounded-0" type="button"><i class="cil-caret-right nav-icon"></i></button>
+    <button class="btn btn-secondary rounded-0" type="button"><i class="cil-arrow-thick-to-right nav-icon"></i></button>
+    <button class="btn btn-info rounded-0" type="button"><i class="cil-alarm nav-icon"></i></button>
+  </nav>
+</div>
+
+<div class="container-fluid">
+  <div class="d-flex justify-content-start">
+      <div class="d-flex justify-content-start">
+          <h4>Nome Tripulante : 0010103312</h4> 
+      </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card-header bg-dark">
+    <form class="row g-3">
+        <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+                <option selected>Motorista</option>
+                <option value="1">JFA</option>
+                <option value="2">RIO</option>
+                <option value="3">UBA</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+        </div>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-body">
+        <div class="table-responsive p-1">            
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Programação SIGLA</th>
+                        <th>#</th>
+                        <th>Registro do Ponto</th>
+                        <th>Usuário</th>
+                        <th>Alteração</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>13/03/2021</td>
+                        <td>08:00</td>
+                        <td>
+                          <button class="btn btn-secondary rounded-0" type="submit" data-coreui-toggle="modal" data-coreui-target="#modalEdita"><i class="cil-book nav-icon"></i></button>
+                        </td>
+                        <td>08:00</td>
+                        <td>teste</td>
+                        <td>Joab</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2021</td>
+                        <td>08:00</td>
+                        <td>
+                          <button class="btn btn-secondary rounded-0" type="submit" data-coreui-toggle="modal" data-coreui-target="#modalEdita"><i class="cil-book nav-icon"></i></button>
+                        </td>
+                        <td>08:00</td>
+                        <td>teste</td>
+                        <td>Joab</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2021</td>
+                        <td>08:00</td>
+                        <td>
+                          <button class="btn btn-secondary rounded-0" type="submit" data-coreui-toggle="modal" data-coreui-target="#modalEdita"><i class="cil-book nav-icon"></i></button>
+                        </td>
+                        <td>08:00</td>
+                        <td>joab.ferreira</td>
+                        <td>Joab</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2021</td>
+                        <td>08:00</td>
+                        <td>
+                          <button class="btn btn-secondary rounded-0" type="submit" data-coreui-toggle="modal" data-coreui-target="#modalEdita"><i class="cil-book nav-icon"></i></button>
+                        </td>
+                        <td>08:00</td>
+                        <td>heyrton</td>
+                        <td>Joab</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2021</td>
+                        <td>08:00</td>
+                        <td>
+                          <button class="btn btn-secondary rounded-0" type="submit" data-coreui-toggle="modal" data-coreui-target="#modalEdita"><i class="cil-book nav-icon"></i></button>
+                        </td>
+                        <td>08:00</td>
+                        <td>marivaldo</td>
+                        <td>Joab</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2021</td>
+                        <td>08:00</td>
+                        <td>
+                          <button class="btn btn-secondary rounded-0" type="submit" data-coreui-toggle="modal" data-coreui-target="#modalEdita"><i class="cil-book nav-icon"></i></button>
+                        </td>
+                        <td>08:00</td>
+                        <td>joab.ferreira</td>
+                        <td>Joab</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalOpen" tabindex="-1" aria-labelledby="modalOpen" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-sm-down">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title h4 text-white" id="modalOpen">Nova Pesquisa</h5>
+        <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-12">
+          <div class="col-md-6">
+            <label for="name">Data Inicial</label>
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-6">
+            <label for="name">Data Final</label>
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-12">
+            <label for="name">Motorista</label>
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>João Antônio</option>
+              <option value="1">Joab</option>
+              <option value="2">Renan</option>
+              <option value="3">Heyrton</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label for="name">Base Operacional</label>
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>Rio de Janeiro</option>
+              <option value="1">Juiz de Fora</option>
+              <option value="2">Belo Horizonte</option>
+              <option value="3">São Paulo</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success text-white" type="button" data-coreui-dismiss="modal">Ok</button>
+        <button class="btn btn-secondary text-white" type="button" data-coreui-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalEdita" tabindex="-1" aria-labelledby="modalEdita" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-sm-down">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title h4 text-white" id="modalEdita">Nova Pesquisa</h5>
+        <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-12">
+          <div class="col-md-5">
+            <label for="name">Motorista</label>
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>João Antônio</option>
+              <option value="1">Joab</option>
+              <option value="2">Renan</option>
+              <option value="3">Heyrton</option>
+            </select>
+          </div>
+          <div class="col-md-5">
+            <label for="name">Data Inicial</label>
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2 justify-content-center">
+            <br>
+            <button class="btn btn-secondary text-white" type="button" data-coreui-dismiss="modal"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

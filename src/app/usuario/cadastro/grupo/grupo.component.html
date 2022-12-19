@@ -1,0 +1,204 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start px-1">
+    <h2 class="">Cadastro de Setores da Empresa</h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-6"></div>
+  </div>
+</div>
+<div class="body flex-grow-1 px-3">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white text-white-b px-3">
+          Gerenciar setores da empresa
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-1">
+              <button
+                mat-raised-button
+                color="primary"
+                style="padding: 8px"
+                (click)="novoSigUsuarioGrupo(templateSigUsuarioGrupo)"
+                routerLinkActive="router-link-active"
+              >
+                Adicionar
+              </button>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Busca de setores</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  (keyup)="filtrar($event.target)"
+                  placeholder="Digite o nome do setor"
+                  name="classeSmart"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <mat-paginator [pageSize]="50" [pageSizeOptions]="[50, 100, 150]">
+          </mat-paginator>
+          <table
+            mat-table
+            [dataSource]="sigUsuarioGrupos"
+            matSort
+            class="mat-elevation-z8"
+          >
+            <ng-container matColumnDef="descgrupo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Nome do setor
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.descrgrupo }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="acao">
+              <th mat-header-cell *matHeaderCellDef>Ações</th>
+              <td mat-cell *matCellDef="let element">
+                <button
+                  class="btn btn-outline-info btn-sm btn-noborder"
+                  matTooltip="Renomear setor"
+                  type="button"
+                  (click)="
+                    editarSigUsuarioGrupo(element, templateSigUsuarioGrupo)
+                  "
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  class="btn btn-outline-danger btn-sm btn-noborder"
+                  matTooltip="Excluir setor"
+                  type="button"
+                  (click)="deleteUsuarioGrupo(element, confirmDeleteModal)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="nomeColunas"></tr>
+            <tr mat-row *matRowDef="let row; columns: nomeColunas"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL PARA ADICIONAR SETOR -->
+<div
+  bsModal
+  #templateSigUsuarioGrupo="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Cadastro"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body bg-white border border-white">
+        <div class="col">
+          <form [formGroup]="registerForm">
+            <div class="col text-center">
+              <img
+                src="../../../../assets/img/Logo.png"
+                width="100px"
+                height="100px"
+              />
+            </div>
+            <div class="col text-center"><h1>ATENÇÃO</h1></div>
+            <div class="col text-center">
+              <h2 style="font-weight: 400">Salvar alterações deste setor?</h2>
+            </div>
+            <div class="form-row m-0 p-0">
+              <div class="form-group col-md-12">
+                <mat-form-field
+                  class="example-full-width"
+                  appearance="fill"
+                  style="width: 100%"
+                >
+                  <mat-label>Nome do setor</mat-label>
+                  <input formControlName="descrgrupo" type="text" matInput />
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer d-flex bg-white justify-content-around">
+        <button
+          type="button"
+          class="btn btn-white col"
+          (click)="templateSigUsuarioGrupo.hide()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-success text-white col"
+          (click)="salvarAlteracao(templateSigUsuarioGrupo)"
+          [disabled]="!registerForm.valid"
+        >
+          Sim. Salvar alterações
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  bsModal
+  #confirmDeleteModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Cadastro"
+>
+  <!-- MODAL PARA EXCLUIR SETOR -->
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-sm">
+      <div class="modal-body bg-white border border-white">
+        <form [formGroup]="registerForm"></form>
+        <div class="col text-center">
+          <img
+            src="../../../../assets/img/Logo.png"
+            width="100px"
+            height="100px"
+          />
+        </div>
+        <div class="col text-center"><h1>ATENÇÃO</h1></div>
+        <div class="col text-center">
+          <h2 style="font-weight: 400">
+            O setor será permanentemente excluído do sistema.
+          </h2>
+        </div>
+      </div>
+      <div class="modal-footer d-flex bg-white justify-content-around">
+        <button
+          type="button"
+          class="btn btn-white btn-lg col"
+          (click)="confirmDeleteModal.hide()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger btn-lg text-white col"
+          (click)="confirmeDelete(confirmDeleteModal)"
+        >
+          Excluir setor
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-atom"
+>
+</ngx-spinner>

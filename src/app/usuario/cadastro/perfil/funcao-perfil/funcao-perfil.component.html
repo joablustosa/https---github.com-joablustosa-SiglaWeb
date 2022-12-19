@@ -1,0 +1,218 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start px-1">
+    <div class="col-sm-6">
+      <div class="d-flex justify-content-start">
+        <h2>Edição de perfil {{ sigPerfil?.descrperfil }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <table mat-table [dataSource]="modulos | slice : 1" multiTemplateDataRows>
+        <!-- Module Column -->
+        <ng-container matColumnDef="moduleTitle">
+          <th mat-header-cell *matHeaderCellDef>Funções</th>
+          <td mat-cell *matCellDef="let element">
+            Módulo de {{ element.modulo }}
+          </td>
+        </ng-container>
+
+        <!-- Module Blank space Column -->
+        <ng-container matColumnDef="modulePermission">
+          <th mat-header-cell *matHeaderCellDef>Permissões</th>
+          <td mat-cell *matCellDef="let element"></td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [attr.colspan]="columnsModule.length"
+          >
+            <div
+              class="example-element-detail"
+              [@detailExpand]="
+                element == expandedElement ? 'expanded' : 'expanded'
+              "
+            >
+              <table
+                mat-table
+                [dataSource]="element.grupos"
+                multiTemplateDataRows
+              >
+                <!-- Group Title Column -->
+                <ng-container matColumnDef="groupTitle">
+                  <th mat-header-cell *matHeaderCellDef>Grupos</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element2"
+                    (click)="
+                      expandedElement2 =
+                        expandedElement2 === element2 ? null : element2
+                    "
+                  >
+                    {{ element2.grupo }}
+                  </td>
+                </ng-container>
+
+                <!-- Group Blank space Column -->
+                <ng-container matColumnDef="groupPermission">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element2">
+                    <a
+                      class="link-dark clickable"
+                      (click)="bulkyAction('', element2.funcoes)"
+                      >Remover acessos</a
+                    >
+                    <a
+                      class="link-dark mx-2 clickable"
+                      (click)="bulkyAction('B', element2.funcoes)"
+                      >Permitir apenas leitura</a
+                    >
+                    <a
+                      class="link-dark clickable"
+                      (click)="bulkyAction('A', element2.funcoes)"
+                      >Permitir leitura/gravação</a
+                    >
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="expandedDetail2">
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    [attr.colspan]="columnsModule.length"
+                  >
+                    <div
+                      class="example-element-detail"
+                      [@detailExpand]="
+                        element == expandedElement2 ? 'expanded' : 'collapsed'
+                      "
+                    >
+                      <table
+                        mat-table
+                        [dataSource]="element.funcoes"
+                        class="mat-elevation-z8"
+                      >
+                        <!-- Function title Column -->
+                        <ng-container matColumnDef="functionTitle">
+                          <th mat-header-cell *matHeaderCellDef>Funções</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.menu }}
+                          </td>
+                        </ng-container>
+
+                        <!-- Function permission Column -->
+                        <ng-container matColumnDef="functionPermission">
+                          <th mat-header-cell *matHeaderCellDef>Permissão</th>
+                          <td mat-cell *matCellDef="let element">
+                            <mat-radio-group
+                              aria-label="Select an option"
+                              color="primary"
+                            >
+                              <mat-radio-button
+                                value=""
+                                (change)="
+                                  adicionaPermissao(
+                                    element.seqperfil,
+                                    element.codfuncao,
+                                    $event.value
+                                  )
+                                "
+                                [checked]="isEmpty(element.codfuncao)"
+                                >Sem acesso</mat-radio-button
+                              >
+                              <mat-radio-button
+                                value="B"
+                                (change)="
+                                  adicionaPermissao(
+                                    element.seqperfil,
+                                    element.codfuncao,
+                                    $event.value
+                                  )
+                                "
+                                [checked]="isSelected(element.codfuncao, 'B')"
+                                >Apenas leitura</mat-radio-button
+                              >
+                              <mat-radio-button
+                                value="A"
+                                (change)="
+                                  adicionaPermissao(
+                                    element.seqperfil,
+                                    element.codfuncao,
+                                    $event.value
+                                  )
+                                "
+                                [checked]="isSelected(element.codfuncao, 'A')"
+                                >Leitura e gravação</mat-radio-button
+                              >
+                            </mat-radio-group>
+                          </td>
+                        </ng-container>
+
+                        <tr
+                          mat-row
+                          *matRowDef="let row; columns: columnsFunction"
+                        ></tr>
+                      </table>
+                    </div></td
+                ></ng-container>
+
+                <tr
+                  mat-row
+                  *matRowDef="let element2; columns: columnsGroup"
+                  [class.example-expanded-row]="expandedElement2 === element2"
+                ></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: ['expandedDetail2']"
+                  class="example-detail-row"
+                ></tr>
+              </table>
+            </div>
+          </td>
+        </ng-container>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: columnsModule"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="
+            expandedElement = expandedElement === element ? null : element
+          "
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="example-detail-row"
+        ></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="p-1"></div>
+<div class="container-fluid d-flex justify-content-end">
+  <div class="d-flex justify-content-end">
+    <button
+      class="mat-elevation-z8"
+      mat-raised-button
+      color="primary"
+      (click)="salvarPerfilFuncao()"
+      style="padding: 5px 10px 5px 10px"
+    >
+      Salvar alterações
+    </button>
+  </div>
+</div>
+<div class="p-2"></div>
+
+  <ngx-spinner
+    bdColor="rgba(51,51,51,0.8)"
+    size="medium"
+    color="#fff"
+    type="ball-atom"
+  >
+    <p style="font-size: 20px; color: white">Loading...</p>
+  </ngx-spinner>
+</div>

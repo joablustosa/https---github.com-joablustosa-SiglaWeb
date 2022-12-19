@@ -1,0 +1,1246 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-start">
+      <h4>Liberação</h4>
+    </div>
+  </div>
+</div>
+<div class="container-fluid p-3">
+  <nav aria-label="breadcrumb">
+    <button class="btn btn-warning rounded-0" type="button" data-coreui-toggle="modal"
+      data-coreui-target="#modalLiberacao"><i class="cil-folder-open nav-icon"></i></button>
+    <button class="btn btn-success rounded-0" type="button"><i class="cil-sync nav-icon" (click)="getliberacoes()"></i></button>
+    <button class="btn btn-danger rounded-0" type="button"><i class="cil-lock-locked nav-icon"></i></button>
+    <button class="btn btn-info rounded-0" type="button" data-coreui-toggle="modal"
+      data-coreui-target="#modalConsultaProgramacao"><i class="cil-list-rich nav-icon"></i></button>
+    <!-- <button class="btn btn-secondary rounded-0" type="button" data-coreui-toggle="modal"
+      data-coreui-target="#modalFiltro"><i class="cil-filter nav-icon"></i></button> -->
+    <button class="btn btn-success rounded-0" type="button"><i class="cil-mobile nav-icon" [routerLink]="['/liberacao/cadastrocelular']"></i></button>
+    <!-- <button class="btn btn-warning rounded-0" type="button"><i class="cil-description nav-icon"></i></button> -->
+    <button class="btn btn-secondary rounded-0" type="button"><i class="cil-print nav-icon"></i></button>
+  </nav>
+</div>
+<div class="container-fluid">
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Pendente 16/10">
+      <div class="card-header bg-dark">
+        <form>
+          <div class="row">
+            <div class="col-sm-3">
+              <input type="date" class="form-control {{ dataInicial ? '' : (dataInicial ? 'is-valid' : 'is-invalid')}}"
+                name="dataInicial" autocomplete="false" [value]="dataInicial" #inputUsuario
+                (input)="atualizaDataInicial(inputUsuario.value)">
+              <div *ngIf="dataInicialEstadoPrimitivo == false">
+                <div *ngIf="dataInicialValido; else msgdataInicialInvalido">
+                  <small class="form-text text-success">Ok!</small>
+                </div>
+                <ng-template #msgdataInicialInvalido>
+                  <small class="form-text text-danger">Verifique a informação</small>
+                </ng-template>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <input type="date"
+                class="form-control {{ origemInicial ? '' : (origemInicial ? 'is-valid' : 'is-invalid')}}"
+                name="origemInicial" [value]="origemInicial" #inputOrigemInicial
+                (input)="atualizaOrigemInicial(inputOrigemInicial.value)">
+              <div *ngIf="origemInicialEstadoPrimitivo == false">
+                <div *ngIf="origemInicialValido; else msgorigemInicialInvalido">
+                  <small class="form-text text-success">Ok...</small>
+                </div>
+                <ng-template #msgorigemInicialInvalido>
+                  <small class="form-text text-danger">Verifique a informação</small>
+                </ng-template>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <select
+                class="form-control {{ destinoInicialEstadoPrimitivo ? '' : (destinoInicialValido ? 'is-valid' : 'is-invalid')}}"
+                [value]="destinoInicial" minlength="5" autocomplete="false" #selectDestinoInicial
+                (change)="atualizaDestinoInicial(selectDestinoInicial.value)">
+                <option value="" selected>Todos</option>
+                <option *ngFor="let selectLocal of selectLocais" [value]="selectLocal.seqaeroporto">{{selectLocal.codiata}}</option>
+              </select>
+              <div *ngIf="destinoInicialEstadoPrimitivo == false">
+                <div *ngIf="destinoInicialValido; else msgselectDestinoInicialInvalido">
+                  <small class="form-text text-success">Ok, entendido!</small>
+                </div>
+                <ng-template #msgselectDestinoInicialInvalido>
+                  <small class="form-text text-danger">Não vai preencher?</small>
+                </ng-template>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <input type="button" class="btn btn-success rounded-0 text-white" value="Login Sigla" [disabled]="formEstado"
+                (click)="pesquisaLiberacaoPost()">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive table-condensed">
+            <mat-paginator [pageSize]="30" [pageSizeOptions]="[30, 40, 50, 60, 100]">
+            </mat-paginator>
+            <table mat-table [dataSource]="liberacoes" matSort class="table-responsive table-condensed">
+              <ng-container matColumnDef="servico">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Serviço </th>
+                <td mat-cell *matCellDef="let element"> {{element.servico}} </td>
+              </ng-container>
+              <ng-container matColumnDef="linha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Linha </th>
+                <td class="table-responsive" mat-cell *matCellDef="let element"> {{element.codlinha}} </td>
+              </ng-container>
+              <ng-container matColumnDef="tipoViagem">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Viagem </th>
+                <td mat-cell *matCellDef="let element"> {{element.tipovoo}} </td>
+              </ng-container>
+              <ng-container matColumnDef="frota">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Frota </th>
+                <td mat-cell *matCellDef="let element"> {{element.codfrota}} </td>
+              </ng-container>
+              <ng-container matColumnDef="veiculo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Veículo </th>
+                <td mat-cell *matCellDef="let element"> {{element.prefixo}} </td>
+              </ng-container>
+              <ng-container matColumnDef="apresentacao">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Apresentação </th>
+                <td mat-cell *matCellDef="let element"> {{element.c_apresentacao | date :'dd-MM-YY hh:mm'}} </td>
+              </ng-container>
+              <ng-container matColumnDef="origem">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Origem </th>
+                <td mat-cell *matCellDef="let element"> {{element.codiataorig}} </td>
+              </ng-container>
+              <ng-container matColumnDef="destino">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Destino </th>
+                <td mat-cell *matCellDef="let element"> {{element.codiatadest}} </td>
+              </ng-container>
+              <ng-container matColumnDef="garagem">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Garagem </th>
+                <td mat-cell *matCellDef="let element"> {{element.c_partidagaragem | date :'dd-MM-YY hh:mm'}} </td>
+              </ng-container>
+              <ng-container matColumnDef="rodoviaria">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Rodoviária </th>
+                <td mat-cell *matCellDef="let element"> {{element.dthrapresentacaorealiz | date :'short'}} </td>
+              </ng-container>
+              <ng-container matColumnDef="plataforma">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Plataforma </th>
+                <td mat-cell *matCellDef="let element"> {{element.plataforma}} </td>
+              </ng-container>
+              <ng-container matColumnDef="motorista">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Motorista </th>
+                <td mat-cell *matCellDef="let element"> {{element.nomeguerra}} </td>
+              </ng-container>
+              <ng-container matColumnDef="aBordo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> A Bordo </th>
+                <td mat-cell *matCellDef="let element"> {{element.codfuncaobordo}} </td>
+              </ng-container>
+              <ng-container matColumnDef="cargo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo </th>
+                <td mat-cell *matCellDef="let element"> {{element.cargo}} </td>
+              </ng-container>
+              <ng-container matColumnDef="base">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Base </th>
+                <td mat-cell *matCellDef="let element"> {{element.nomebase}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="nomeColunas"></tr>
+              <tr mat-row *matRowDef="let row; columns: nomeColunas;"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Pendente 16/11">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Linha</th>
+                  <th>Tipo Viagem</th>
+                  <th>Frota</th>
+                  <th>Veículo</th>
+                  <th>Apresentação</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Garagem</th>
+                  <th>Rodoviária</th>
+                  <th>Plataforma</th>
+                  <th>Motorista</th>
+                  <th>A Bordo</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>22222222222</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>22222222222223</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>22222222222</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Pendente 16/12">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Linha</th>
+                  <th>Tipo Viagem</th>
+                  <th>Frota</th>
+                  <th>Veículo</th>
+                  <th>Apresentação</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Garagem</th>
+                  <th>Rodoviária</th>
+                  <th>Plataforma</th>
+                  <th>Motorista</th>
+                  <th>A Bordo</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>3333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Retorno">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Linha</th>
+                  <th>Tipo Viagem</th>
+                  <th>Frota</th>
+                  <th>Veículo</th>
+                  <th>Apresentação</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Garagem</th>
+                  <th>Rodoviária</th>
+                  <th>Plataforma</th>
+                  <th>Motorista</th>
+                  <th>A Bordo</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>3333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Ralizado">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Linha</th>
+                  <th>Tipo Viagem</th>
+                  <th>Frota</th>
+                  <th>Veículo</th>
+                  <th>Apresentação</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Garagem</th>
+                  <th>Rodoviária</th>
+                  <th>Plataforma</th>
+                  <th>Motorista</th>
+                  <th>A Bordo</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>3333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Recolhimento">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Linha</th>
+                  <th>Tipo Viagem</th>
+                  <th>Frota</th>
+                  <th>Veículo</th>
+                  <th>Apresentação</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Garagem</th>
+                  <th>Rodoviária</th>
+                  <th>Plataforma</th>
+                  <th>Motorista</th>
+                  <th>A Bordo</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Retorno">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Linha</th>
+                  <th>Tipo Viagem</th>
+                  <th>Frota</th>
+                  <th>Veículo</th>
+                  <th>Apresentação</th>
+                  <th>Origem</th>
+                  <th>Destino</th>
+                  <th>Garagem</th>
+                  <th>Rodoviária</th>
+                  <th>Plataforma</th>
+                  <th>Motorista</th>
+                  <th>A Bordo</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>3333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+                <tr>
+                  <td>33333333333</td>
+                  <td>123321 - RIO X APA - 123123</td>
+                  <td>Normal</td>
+                  <td>DD 60</td>
+                  <td>11212.U</td>
+                  <td>13/03 21:00</td>
+                  <td>RIO</td>
+                  <td>APA</td>
+                  <td>12:00</td>
+                  <td>13:00</td>
+                  <td>11 à 23</td>
+                  <td>Joab Ferreira</td>
+                  <td>Antonio Carlos</td>
+                  <td>LIN</td>
+                  <td>RIO DE JANEIRO</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Motorista/atividade">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BHZ</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <div class="form-check">
+              <label class="form-check-label text-white" for="gridCheck">Somente sem motorista</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Motorista</th>
+                  <th>Cargo</th>
+                  <th>Base</th>
+                  <th>Atividade</th>
+                  <th>Local</th>
+                  <th>Início</th>
+                  <th>Término</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>Joaquim Gonaçlves</td>
+                  <td>RAF</td>
+                  <td>BRASILIA RGA</td>
+                  <td>PLANTÃO</td>
+                  <td>SSA</td>
+                  <td>02:20</td>
+                  <td>03:00</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>Joaquim Gonaçlves</td>
+                  <td>RAF</td>
+                  <td>BRASILIA RGA</td>
+                  <td>PLANTÃO</td>
+                  <td>SSA</td>
+                  <td>02:20</td>
+                  <td>03:00</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>Joaquim Gonaçlves</td>
+                  <td>RAF</td>
+                  <td>BRASILIA RGA</td>
+                  <td>PLANTÃO</td>
+                  <td>SSA</td>
+                  <td>02:20</td>
+                  <td>03:00</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>Joaquim Gonaçlves</td>
+                  <td>RAF</td>
+                  <td>BRASILIA RGA</td>
+                  <td>PLANTÃO</td>
+                  <td>SSA</td>
+                  <td>02:20</td>
+                  <td>03:00</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>Joaquim Gonaçlves</td>
+                  <td>RAF</td>
+                  <td>BRASILIA RGA</td>
+                  <td>PLANTÃO</td>
+                  <td>SSA</td>
+                  <td>02:20</td>
+                  <td>03:00</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>Joaquim Gonaçlves</td>
+                  <td>RAF</td>
+                  <td>BRASILIA RGA</td>
+                  <td>PLANTÃO</td>
+                  <td>SSA</td>
+                  <td>02:20</td>
+                  <td>03:00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Consultas">
+      <div class="card-header bg-dark">
+        <form class="row g-3">
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>BASE OP</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>Motorista</option>
+              <option value="1">JFA</option>
+              <option value="2">RIO</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-2">
+            <button class="btn btn-secondary rounded-0" type="submit"><i class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive p-1">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Horário</th>
+                  <th>Motorista</th>
+                  <th>Base</th>
+                  <th>Tipo</th>
+                  <th>Descritivo</th>
+                  <th>Código</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>08:00</td>
+                  <td>Manoela da Silva</td>
+                  <td>RIO DE JANEIRO</td>
+                  <td>Normal</td>
+                  <td>Viagem tal</td>
+                  <td>849304904</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>08:00</td>
+                  <td>Manoela da Silva</td>
+                  <td>RIO DE JANEIRO</td>
+                  <td>Normal</td>
+                  <td>Viagem tal</td>
+                  <td>849304904</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>08:00</td>
+                  <td>Manoela da Silva</td>
+                  <td>RIO DE JANEIRO</td>
+                  <td>Normal</td>
+                  <td>Viagem tal</td>
+                  <td>849304904</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>08:00</td>
+                  <td>Manoela da Silva</td>
+                  <td>RIO DE JANEIRO</td>
+                  <td>Normal</td>
+                  <td>Viagem tal</td>
+                  <td>849304904</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>08:00</td>
+                  <td>Manoela da Silva</td>
+                  <td>RIO DE JANEIRO</td>
+                  <td>Normal</td>
+                  <td>Viagem tal</td>
+                  <td>849304904</td>
+                </tr>
+                <tr>
+                  <td>13/03/2021</td>
+                  <td>08:00</td>
+                  <td>Manoela da Silva</td>
+                  <td>RIO DE JANEIRO</td>
+                  <td>Normal</td>
+                  <td>Viagem tal</td>
+                  <td>849304904</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<div class="modal fade" id="modalLiberacao" tabindex="-1" aria-labelledby="modalLiberacao" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-sm-down">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title h4 text-white" id="modalLiberacao">Consulta de Liberação</h5>
+        <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-12">
+          <div class="col-md-6">
+            <label for="name">Data</label>
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-6">
+            <label for="name">Partida</label>
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>RIO</option>
+              <option value="1">JFA</option>
+              <option value="2">BHZ</option>
+              <option value="3">UBA</option>
+            </select>
+          </div>
+          <div class="col-12 p-3">
+            <div class="form-check">
+              <label class="form-check-label" for="gridCheck">Somente o local indicado</label>
+              <input class="form-check-input" id="gridCheck" type="checkbox">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success text-white" type="button" data-coreui-dismiss="modal">Ok</button>
+        <button class="btn btn-secondary text-white" type="button" data-coreui-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalConsultaProgramacao" tabindex="-1" aria-labelledby="modalConsultaProgramacao"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title h4 text-white" id="modalConsultaProgramacao">Consulta de Programação</h5>
+        <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-12">
+          <div class="col-md-5">
+            <label for="name">Motorista</label>
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>João Antônio</option>
+              <option value="1">Joab</option>
+              <option value="2">Renan</option>
+              <option value="3">Heyrton</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="name">Data Inicial</label>
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-3 justify-content-center">
+            <br>
+            <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal"><i
+                class="cil-search nav-icon"></i></button>
+          </div>
+          <div class="divider p-3"></div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-condensed table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Início</th>
+                      <th>Fim</th>
+                      <th>Orig.</th>
+                      <th>Dest.</th>
+                      <th>Atividade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-success btn-sm text-white" type="button" data-coreui-dismiss="modal"><i
+                    class="cil-check nav-icon"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-condensed table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Início</th>
+                      <th>Fim</th>
+                      <th>Orig.</th>
+                      <th>Dest.</th>
+                      <th>Atividade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-success btn-sm text-white" type="button" data-coreui-dismiss="modal"><i
+                    class="cil-check nav-icon"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-condensed table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Início</th>
+                      <th>Fim</th>
+                      <th>Orig.</th>
+                      <th>Dest.</th>
+                      <th>Atividade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                    <tr>
+                      <td>12:00</td>
+                      <td>13:00</td>
+                      <td>RIO</td>
+                      <td>SAO</td>
+                      <td>Normal</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-success btn-sm text-white" type="button" data-coreui-dismiss="modal"><i
+                    class="cil-check nav-icon"></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalFiltro" tabindex="-1" aria-labelledby="modalFiltro" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen-sm-down">
+    <div class="modal-content">
+      <div class="modal-header bg-success">
+        <h5 class="modal-title h4 text-white" id="modalFiltro">Filtrar</h5>
+        <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-12">
+          <div class="col-md-5">
+            <label for="name">Motorista</label>
+            <select class="form-select" id="autoSizingSelect">
+              <option selected>João Antônio</option>
+              <option value="1">Joab</option>
+              <option value="2">Renan</option>
+              <option value="3">Heyrton</option>
+            </select>
+          </div>
+          <div class="col-md-5">
+            <label for="name">Data Inicial</label>
+            <input class="form-control" id="inputEmail4" type="date">
+          </div>
+          <div class="col-md-2 justify-content-center">
+            <br>
+            <button class="btn btn-secondary text-white" type="button" data-coreui-dismiss="modal"><i
+                class="cil-search nav-icon"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner></ngx-spinner>

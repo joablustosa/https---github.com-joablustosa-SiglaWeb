@@ -1,0 +1,41 @@
+.sub {
+  font-size: 13px;
+}
+
+.bg-sucess {
+  background-color: rgb(255, 255, 255);
+}
+
+.sidebar-nav .nav-group-items {
+  font-size: 11px;
+  margin-left: -40px;
+  background-color: #1a202b94;
+}
+
+.sidebar-brand-full {
+  width: 155px;
+  cursor: pointer;
+}
+
+.sidebar-brand-narrow {
+  width: 40px;
+}
+
+.sidebar {
+  height: 100vh;
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.nav-title {
+  font-size: 12px;
+  color: #b1b7c1;
+}
+
+.nav-icon {
+  font-size: 24px;
+  font-style: none !important;
+}
+
+.disabled {
+  color: rgba(255, 255, 255, 0.3) !important;
+}

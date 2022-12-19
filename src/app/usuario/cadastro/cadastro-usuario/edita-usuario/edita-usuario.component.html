@@ -1,0 +1,374 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start px-1">
+    <div class="col-sm-6">
+      <div class="d-flex justify-content-start">
+        <h2>Edição de Usuário</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card">
+    <div class="row margin-header">
+      <div class="col">
+        <h3>Pessoal</h3>
+      </div>
+      <div class="col">
+        <h3>Empresa</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="registerForm">
+        <div class="row">
+
+          <!-- Usuário -->
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Usuário</mat-label>
+              <input type="text" matInput formControlName="usuario" required />
+              <mat-error *ngIf="controlUsuario.invalid"
+                >Campo obrigatório</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <!-- Nome Completo -->
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Nome completo</mat-label>
+              <input type="text" matInput formControlName="nome" required />
+              <mat-error *ngIf="controlNome.invalid"
+                >Campo obrigatório</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <!-- Regional -->
+          <div class="col-sm-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Regional</mat-label>
+              <mat-select formControlName="seqregional" [value]="sigUsuario.seqregional">
+                <mat-option
+                  *ngFor="let selectRegional of selectRegionais"
+                  [value]="selectRegional.seqregional"
+                  >&ensp;{{ selectRegional.descrregional }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Núcleo Operacional -->
+          <div class="col-sm-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Núcleo operacional</mat-label>
+              <mat-select formControlName="seqnop"
+                    [value]="sigUsuario.seqnop">
+                  <mat-option
+                    *ngFor="let selectNop of selectNops"
+                    [value]="selectNop.seqnop"
+                    >&ensp;{{ selectNop.descrnop }}</mat-option
+                  >
+                </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+
+          <!-- E-mail -->
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>E-mail</mat-label>
+              <input type="text" matInput formControlName="email" />
+            </mat-form-field>
+          </div>
+
+          <!-- CPF -->
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>CPF</mat-label>
+              <input type="text" matInput formControlName="cpf" />
+            </mat-form-field>
+          </div>
+
+          <!-- Setor -->
+          <div class="col-sm-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Setor</mat-label>
+              <mat-select name="seqgrupo" formControlName="seqgrupo">
+                <mat-option
+                  *ngFor="let selectGrupo of selectGrupos"
+                  [value]="selectGrupo?.seqgrupo"
+                >
+                  {{ selectGrupo?.descrgrupo }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Matrícula -->
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Mátrícula</mat-label>
+              <input type="text" matInput formControlName="matricula" />
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br />
+<div class="container-fluid">
+  <div class="card-body">
+    <mat-tab-group>
+      <!-- Seleção de Perfis -->
+      <mat-tab label="SELEÇÃO DE PERFIS">
+        <div class="p-1"></div>
+        <table mat-table [dataSource]="selectPerfis">
+          <ng-container matColumnDef="profileSelection">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox color="primary"
+                (change)="$event ? toggleAllRows() : null"
+                [checked]="selecaoPerfil.hasValue() && isAllSelected()"
+                [indeterminate]="selecaoPerfil.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox color="primary"
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selecaoPerfil.toggle(row) : null"
+                [checked]="selecaoPerfil.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <!-- Descriçao Perfil Column -->
+          <ng-container matColumnDef="profileDescription">
+            <th mat-header-cell *matHeaderCellDef>
+              <span>Perfil de usuário</span>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.descrperfil }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsProfile"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: columnsProfile"
+            (click)="selecaoPerfil.toggle(row)"
+          ></tr>
+        </table>
+        <div class="p-2"></div>
+      </mat-tab>
+      <!-- FUNÇÕES ESPECIFICAS -->
+      <mat-tab label="FUNÇÕES ESPECÍFICAS">
+        <div class="p-1"></div>
+        <table
+          mat-table
+          [dataSource]="modulos | slice: 1"
+          multiTemplateDataRows
+        >
+          <!-- Module Column -->
+          <ng-container matColumnDef="moduleTitle">
+            <th mat-header-cell *matHeaderCellDef>Funções</th>
+            <td mat-cell *matCellDef="let element">
+              Módulo de {{ element.modulo }}
+            </td>
+          </ng-container>
+
+          <!-- Module Blank space Column -->
+          <ng-container matColumnDef="modulePermission">
+            <th mat-header-cell *matHeaderCellDef>Permissões</th>
+            <td mat-cell *matCellDef="let element"></td>
+          </ng-container>
+
+          <ng-container matColumnDef="expandedDetail">
+            <td
+              mat-cell
+              *matCellDef="let element"
+              [attr.colspan]="columnsModule.length"
+            >
+              <div
+                class="example-element-detail"
+                [@detailExpand]="
+                  element == expandedElement ? 'expanded' : 'expanded'
+                "
+              >
+                <table
+                  mat-table
+                  [dataSource]="element.grupos"
+                  multiTemplateDataRows
+                >
+                  <!-- Group Title Column -->
+                  <ng-container matColumnDef="groupTitle">
+                    <th mat-header-cell *matHeaderCellDef>Grupos</th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element2"
+                      (click)="
+                        expandedElement2 =
+                          expandedElement2 === element2 ? null : element2
+                      "
+                    >
+                      {{ element2.grupo }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Group Blank space Column -->
+                  <ng-container matColumnDef="groupPermission">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element2">
+                      <a
+                        class="link-dark clickable"
+                        (click)="bulkyAction('', element2.funcoes)"
+                        >Remover acessos</a
+                      >
+                      <a
+                        class="link-dark mx-4 clickable"
+                        (click)="bulkyAction('B', element2.funcoes)"
+                        >Permitir apenas leitura</a
+                      >
+                      <a
+                        class="link-dark clickable"
+                        (click)="bulkyAction('A', element2.funcoes)"
+                        >Permitir leitura/gravação</a
+                      >
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="expandedDetail2">
+                    <td
+                      mat-cell
+                      *matCellDef="let element"
+                      [attr.colspan]="columnsModule.length"
+                    >
+                      <div
+                        class="example-element-detail"
+                        [@detailExpand]="
+                          element == expandedElement2 ? 'expanded' : 'collapsed'
+                        "
+                      >
+                        <table
+                          mat-table
+                          [dataSource]="element.funcoes"
+                          class="mat-elevation-z8"
+                        >
+                          <!-- Function title Column -->
+                          <ng-container matColumnDef="functionTitle">
+                            <th mat-header-cell *matHeaderCellDef>Funções</th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.menu }}
+                            </td>
+                          </ng-container>
+
+                          <!-- Function permission Column -->
+                          <ng-container matColumnDef="functionPermission">
+                            <th mat-header-cell *matHeaderCellDef>Permissão</th>
+                            <td mat-cell *matCellDef="let element">
+                              <mat-radio-group aria-label="Select an option" color="primary">
+                                <mat-radio-button
+                                  value=""
+                                  (change)="
+                                    adicionaPermissao(
+                                      element.codfuncao,
+                                      $event.value
+                                    )
+                                  "
+                                  [checked]="isEmpty(element.codfuncao)"
+                                  >Sem acesso</mat-radio-button
+                                >
+                                <mat-radio-button
+                                  value="B"
+                                  (change)="
+                                    adicionaPermissao(
+                                      element.codfuncao,
+                                      $event.value
+                                    )
+                                  "
+                                  [checked]="isSelected(element.codfuncao, 'B')"
+                                  >Apenas leitura</mat-radio-button
+                                >
+                                <mat-radio-button
+                                  value="A"
+                                  (change)="
+                                    adicionaPermissao(
+                                      element.codfuncao,
+                                      $event.value
+                                    )
+                                  "
+                                  [checked]="isSelected(element.codfuncao, 'A')"
+                                  >Leitura e gravação</mat-radio-button
+                                >
+                              </mat-radio-group>
+                            </td>
+                          </ng-container>
+
+                          <tr
+                            mat-row
+                            *matRowDef="let row; columns: columnsFunction"
+                          ></tr>
+                        </table>
+                      </div></td
+                  ></ng-container>
+
+                  <tr
+                    mat-row
+                    *matRowDef="let element2; columns: columnsGroup"
+                    [class.example-expanded-row]="expandedElement2 === element2"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: ['expandedDetail2']"
+                    class="example-detail-row"
+                  ></tr>
+                </table>
+              </div>
+            </td>
+          </ng-container>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: columnsModule"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="
+              expandedElement = expandedElement === element ? null : element
+            "
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: ['expandedDetail']"
+            class="example-detail-row"
+          ></tr>
+        </table>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+<div class="p-1"></div>
+<div class="container-fluid d-flex justify-content-end">
+  <div class="d-flex justify-content-end">
+    <button
+      class="mat-elevation-z8"
+      mat-raised-button
+      color="primary"
+      (click)="salvarUsuario()"
+      [disabled]="!registerForm.valid"
+      style="padding: 5px 10px 5px 10px"
+    >
+      Salvar alterações
+    </button>
+  </div>
+</div>
+<div class="p-2"></div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-atom"
+>
+</ngx-spinner>

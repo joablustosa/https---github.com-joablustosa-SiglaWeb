@@ -1,0 +1,129 @@
+<header class="header header-sticky mb-4">
+  <div class="container-fluid">
+    <a class="header-brand d-md-none" href="#">
+      <i class="cil-address-book nav-icon"></i>
+    </a>
+    <ul class="header-nav ms-auto">
+      <li class="nav-item">
+        <b class="text-success">{{tripulante?.nome}}</b>
+      </li>
+    </ul>
+    <ul class="header-nav ms-auto">
+      <li class="nav-item">
+
+      </li>
+    </ul>
+    <ul class="header-nav ms-3">
+      <li class="nav-item dropdown">
+        <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+          aria-expanded="false">
+          <div class="avatar avatar-md">
+            <img class="avatar-img" src="../../../assets/img/Logo.png" alt="user@email.com">
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-end pt-0">
+          <div class="dropdown-header bg-light py-2">
+            <div class="fw-semibold">Sigla Admin</div>
+          </div>
+          <a class="dropdown-item" (click)="logoff()" style="cursor: pointer;">
+            <i class="cil-account-logout nav-icon"></i> Sair</a><a class="dropdown-item" href="#">
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<div class="row" *ngFor="let mensagem of mensagens" class="container" style="padding-bottom: 15px;">
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <b>{{mensagem.titulo.substring(0,30)}}</b>
+        </mat-panel-title>
+        <mat-panel-description>
+          Clique para vizualizar a mensagem...
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>{{mensagem.mensagem}}.</p>
+      <code>{{mensagem?.dthraalteracao | date: "dd/mm/YYYY HH:mm:ss"}}</code> 
+    </mat-expansion-panel>
+  </mat-accordion>
+  <!-- <div class="containerMensagem">
+    <div class="arrow">
+      <div class="outer"></div>
+      <div class="inner"></div>
+    </div>
+    <div class="message-body">
+      <div class="row">
+        <div class="col-sm-3">
+          <img src="../../assets/img/Logo.png" width="60px" height="60px">
+        </div>
+        <div class="col-sm-9">
+          <p style="color: red; font-size: 14px;"><b>{{mensagem.titulo}}</b></p>
+          <p>{{mensagem.mensagem}}</p>
+          <p>{{mensagem?.dthraalteracao}}</p>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>
+
+<div class="row container-fluid" style="padding-top: 20px;">
+  <h2 class="text-center" style="font-weight: bold; color: green;">Escala Programada</h2>
+  <div *ngFor="let jornada of jornadaFiltrada" class="container-fluid" style="padding-bottom: 5px;">
+    <mat-accordion>
+      <mat-expansion-panel (click)="vizualizaJornada(jornada)"
+        [ngClass]="{ 'backgroundPainelLido' : jornada.flgestado != 'P' && jornada.flgestado != 'A', 'backgroundPainelNaoLido' : jornada.flgestado == 'P' || jornada.flgestado == 'A'}"
+        [expanded]="statusPainelFuncao(jornada)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon *ngIf="jornada.codatividade == 'FR' && jornada.flgestado == 'V'" style="color: blue;">tsunami
+            </mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == 'FA' && jornada.flgestado == 'V'" style="color: rebeccapurple;">
+              cake</mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == 'SEM ESC' && jornada.flgestado == 'V'"
+              style="color: rgb(255, 219, 153);">warning</mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == 'VG VAZIA' && jornada.flgestado == 'V'" style="color: green;">
+              remove_road</mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == 'FALTA' && jornada.flgestado == 'V'" style="color: yellow;">
+              disabled_by_default</mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == 'TUR' && jornada.flgestado == 'V'" style="color: orchid;">sell
+            </mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == 'DM' && jornada.flgestado == 'V'" style="color: orange;">medication
+            </mat-icon>
+            <mat-icon *ngIf="jornada.codatividade == null && jornada.flgestado == 'V'" style="color: green;">minor_crash
+            </mat-icon>
+            <mat-icon *ngIf="jornada.flgestado != 'V'" style="color: rgb(47, 47, 47);">downloading</mat-icon>
+          </mat-panel-title>
+          <mat-panel-description class="text-center">
+            Data da Jornada: &nbsp; <b class="text-danger">{{titulo(jornada)}}</b>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div>
+          <div class="table-responsive-sm" *ngFor="let item of jornadas; let index = index">
+            <table class="table table-sm table-bordered thead-dark" *ngIf="item.dtjornada == jornada.dtjornada && jornada.codatividade == null">
+              <tbody>
+                <tr>
+                  <th class="bg-light" scope="row" style="width: 15%">{{item.servico}}</th>
+                  <td class="bg-light" style="width: 10%">{{item.codfuncaobordo}}</td>
+                  <td class="bg-light" style="width: 25%">{{item.codlinha}}</td>
+                  <td class="bg-light" style="width: 15%">{{item.codiataorig}}</td>
+                  <td class="bg-light" style="width: 12%">{{item.codiatadest}}</td>
+                  <th class="bg-light" scope="row" style="width: 13%">{{formataDataCompleta(item.dthrinicio)}}</th>
+                  <th class="bg-light" scope="row" style="width: 10%">{{item.prefixo}}</th>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row text-center" *ngIf="item.dtjornada == jornada.dtjornada && jornada.codatividade != null">
+              <h3><b>{{item.codatividade}}</b></h3>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
+<a href="https://play.google.com/store/apps/details?id=mplantech.com.sigla_mobile" target="_blank" class="float">
+  <img src="../../assets/img/playStore.png" width="50px" height="50px">
+</a>

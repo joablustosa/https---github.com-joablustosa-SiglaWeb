@@ -1,0 +1,115 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-start">
+      <div class="d-flex justify-content-start">
+        <h4>Registro de Ocorrência</h4>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid p-3">
+    <nav aria-label="breadcrumb">
+      <button class="btn btn-warning rounded-0" type="button" data-coreui-toggle="modal" data-coreui-target="#modalOpen"><i class="cil-folder-open nav-icon"></i></button>
+      <button class="btn btn-success rounded-0" type="button"><i class="cil-print nav-icon"></i></button>
+      <button class="btn btn-secondary rounded-0" type="button"><i class="cil-arrow-thick-to-left nav-icon"></i></button>
+      <button class="btn btn-secondary rounded-0" type="button"><i class="cil-caret-left nav-icon"></i></button>
+      <button class="btn btn-secondary rounded-0" type="button"><i class="cil-caret-right nav-icon"></i></button>
+      <button class="btn btn-secondary rounded-0" type="button"><i class="cil-arrow-thick-to-right nav-icon"></i></button>
+      <button class="btn btn-danger rounded-0" type="button"><i class="cil-trash nav-icon"></i></button>
+      <button class="btn btn-success rounded-0" type="button"><i class="cil-description nav-icon"></i></button>
+      <button class="btn btn-info rounded-0" type="button"><i class="cil-chevron-double-down nav-icon"></i></button>
+    </nav>
+  </div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive p-1">            
+                <table class="table table-condensed table-striped">
+                    <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Motorista</th>
+                        <th>Inicio</th>
+                        <th>Fim</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Usuário</th>
+                        <th>Alteração</th>
+                        <th>Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>13/03/1991</td>
+                        <td>João das Neves</td>
+                        <td>12:00</td>
+                        <td>13:00</td>
+                        <td>RIO</td>
+                        <td>JDF</td>
+                        <td>joab.ferreira</td>
+                        <td>Heyrton</td>
+                        <td>
+                            <button class="btn btn-danger rounded-0" type="button"><i class="cil-trash nav-icon"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>13/03/1991</td>
+                        <td>João das Neves</td>
+                        <td>12:00</td>
+                        <td>13:00</td>
+                        <td>RIO</td>
+                        <td>JDF</td>
+                        <td>joab.ferreira</td>
+                        <td>Heyrton</td>
+                        <td>
+                            <button class="btn btn-danger rounded-0" type="button"><i class="cil-trash nav-icon"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>13/03/1991</td>
+                        <td>João das Neves</td>
+                        <td>12:00</td>
+                        <td>13:00</td>
+                        <td>RIO</td>
+                        <td>JDF</td>
+                        <td>joab.ferreira</td>
+                        <td>Heyrton</td>
+                        <td>
+                            <button class="btn btn-danger rounded-0" type="button"><i class="cil-trash nav-icon"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalOpen" tabindex="-1" aria-labelledby="modalOpen" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header bg-success">
+          <h5 class="modal-title h4 text-white" id="modalOpen">Nova Pesquisa</h5>
+          <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="row g-12">
+            <div class="col-md-5">
+              <label for="name">Motorista</label>
+              <select class="form-select" id="autoSizingSelect">
+                <option selected>João Antônio</option>
+                <option value="1">Joab</option>
+                <option value="2">Renan</option>
+                <option value="3">Heyrton</option>
+              </select>
+            </div>
+            <div class="col-md-5">
+              <label for="name">Data Inicial</label>
+              <input class="form-control" id="inputEmail4" type="date">
+            </div>
+            <div class="col-md-2 justify-content-center">
+              <br>
+              <button class="btn btn-secondary text-white" type="button" data-coreui-dismiss="modal"><i class="cil-search nav-icon"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

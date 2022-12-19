@@ -1,0 +1,128 @@
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 400px;
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+    background-color: transparent;
+}
+th.mat-header-cell {
+    text-align: left;
+    max-width: 200px;
+    border-spacing: 1;
+    background-color: #4f5d73;
+    color: white;
+}
+
+.mat-paginator{
+    background-color: #4f5d73;
+    color: white; 
+}
+
+table.dataTable:not(.table-condensed) tbody tr.even td, table.dataTable-simple:not(.table-condensed) tbody tr.even td {
+    background-color: #f0f0f0;
+}
+
+table.dataTable tbody tr td, table.dataTable-simple tbody tr td {
+    vertical-align: middle;
+}
+
+table.dataTable th, table.dataTable td {
+    -webkit-box-sizing: content-box;
+    box-sizing: 10px;
+}
+
+table th, table td {
+    padding: 6px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+*, *::before, *::after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+table.dataTable {
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 7px;
+}
+
+.container {
+    display: flex;
+}
+
+button:nth-child(1) {
+    margin-right: auto;
+}
+
+mat-form-field{
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 13px;
+    line-height: 1;
+    background-color: white;
+    background-clip: padding-box;
+    display: inline;
+    border: 1px dashed #ddd;
+    outline: 1px solid rgb(44, 44, 56);
+    outline-offset: 1px;
+    margin: 1px;
+} 
+mat-form-field:focus{
+    outline: 1px solid rgb(51, 51, 70);
+}
+mat-form-field:nth-child(2) {
+    outline-offset: 0px;
+}
+mat-form-field:nth-child(2):focus {
+    outline-offset: 5px;
+    outline: 1px solid rgb(0, 255, 255);
+    border:none;
+}
+
+@if $enable-rounded {
+    border-radius: $input-border-radius;
+} @else {
+    border-radius: 0;
+}
+
+@include box-shadow($input-box-shadow);
+@include transition($input-transition);
+
+::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+@include form-control-focus();
+
+::placeholder {
+    color: rgb(75, 75, 97);
+    opacity: 1;
+}
+:disabled,
+[readonly] {
+    background-color: rgb(245, 245, 245);
+    opacity: 1;
+}
+
+
+*, *::before, *::after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+    color: black;
+    border: turquoise;
+}
+
+.div-botao {
+    display: flex;
+    justify-content: flex-start;
+  }

@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <ul class="header-nav ms-3 clickable" routerLink="/inicio">
+        Inicio
+      </ul>
+      <ul class="header-nav ms-3 clickable" routerLink="/inicio">
+        Sobre
+      </ul>
+      <ul class="navbar-nav me-auto mb-1 mb-lg-0"></ul>
+      <ul class="header-nav ms-3">
+        <button mat-icon-button>
+          <mat-icon>notifications</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>view_list</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>mail</mat-icon>
+        </button>
+      </ul>
+
+      <!-- Nome: Renan Lustosa
+      Descrição: Menu do Topo -->
+      <ul class="header-nav ms-3">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link py-0"
+            data-coreui-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <button
+              mat-stroked-button
+              class="btn-account"
+              [matMenuTriggerFor]="menu"
+            >
+              {{ tripulante.nome }}
+              <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+          </a>
+          <mat-menu #menu="matMenu">
+            <button
+              mat-menu-item
+              routerLink="/usuario/editar/{{ tripulante.Id }}"
+            >
+              <mat-icon>edit</mat-icon>
+              <span>Editar Usuário</span>
+            </button>
+            <button mat-menu-item routerLink="/inicio">
+              <mat-icon>settings</mat-icon>
+              <span>Configuração</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="sair()">
+              <mat-icon>exit_to_app</mat-icon>
+              <span>Sair</span>
+            </button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

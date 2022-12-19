@@ -1,0 +1,13 @@
+<div *ngIf="logadoSim() && dominio == '1'">
+  <app-menu-lateral></app-menu-lateral>
+</div>
+<div
+  class="wrapper bg-light min-vh-100 fadeInDown"
+  [style.padding-left.px]="content_flex_left()"
+  [style.padding-top.px]="content_flex_top()"
+>
+  <div *ngIf="logadoS && dominio == '1'">
+    <app-topo></app-topo>
+  </div>
+  <router-outlet></router-outlet>
+</div>

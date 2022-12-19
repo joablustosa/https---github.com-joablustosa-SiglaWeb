@@ -1,0 +1,397 @@
+<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+  <div class="sidebar-brand d-none d-md-flex" routerLink="/inicio">
+    <img
+      class="sidebar-brand-full"
+      src="../../assets/img/logoSiglaBranco.png"
+    />
+    <img
+      class="sidebar-brand-narrow"
+      src="../../assets/img/iconeSiglaBranco.png"
+    />
+  </div>
+  <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
+    <li class="nav-divider"></li>
+    <li class="nav-title">Liberação</li>
+    <!--MENU MODULO LIBERAÇÃO-->
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle sub" href="#"
+        ><mat-icon class="nav-icon disabled">departure_board</mat-icon>Liberação</a
+      >
+      <ul class="nav-group-items">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/liberacao']" target="_top">
+            Liberação</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle sub" href="#"
+        ><mat-icon class="nav-icon disabled">today</mat-icon>Ocorrência</a
+      >
+      <ul class="nav-group-items">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/ocorrenciaregistroocorrencia']"
+            target="_top"
+          >
+            Registro de ocorrência</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle sub" href="#"
+        ><mat-icon class="nav-icon disabled">gps_fixed</mat-icon>Ponto de tripulante</a
+      >
+      <ul class="nav-group-items">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/pontoregistrar']"
+            target="_top"
+          >
+            Registrar ponto</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/pontoavaliar']"
+            target="_top"
+          >
+            Avaliar registro</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/pontoimportacaodatasul']"
+            target="_top"
+          >
+            Importação Datasul</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/pontofechamentoperiodo']"
+            target="_top"
+          >
+            Fechamento de periodo</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle sub" href="#"
+        ><mat-icon class="nav-icon disabled">library_add</mat-icon>Cadastros</a
+      >
+      <ul class="nav-group-items">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/cadastrocelular']"
+            target="_top"
+          >
+            Listar Celulares</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/cadastromotivobaixa']"
+            target="_top"
+          >
+            Motivos de baixa</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/cadastroregistroavaria']"
+            target="_top"
+          >
+            Registro de avarias</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/cadastrotipoavaria']"
+            target="_top"
+          >
+            Tipos de avarias</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/cadastromotivoliberacao']"
+            target="_top"
+          >
+            Motivos de liberação</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/cadastrojustificativa']"
+            target="_top"
+          >
+            Justificativas</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle sub" href="#"
+        ><mat-icon class="nav-icon disabled">assignment</mat-icon>Relatórios</a
+      >
+      <ul class="nav-group-items">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioalteracaoveiculo']"
+            target="_top"
+          >
+            Alteração de veículos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioapresentacaotripulante']"
+            target="_top"
+          >
+            Apresentação de tripulantes</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioavariacelular']"
+            target="_top"
+          >
+            Avarias de celular</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriocelular']"
+            target="_top"
+          >
+            Celulares</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriochegadatripulante']"
+            target="_top"
+          >
+            Chegadas de tripulantes</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioescala']"
+            target="_top"
+          >
+            Escala</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriofolga']"
+            target="_top"
+          >
+            Folgas</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioliberacao']"
+            target="_top"
+          >
+            Liberações</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriomovimentacaocelular']"
+            target="_top"
+          >
+            Movimentação de celulares
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/liberacaorelatorioocorrencia']"
+            target="_top"
+          >
+            Ocorrências</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriopartidatripulante']"
+            target="_top"
+          >
+            Partidas de tripulantes</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioponto']"
+            target="_top"
+          >
+            Ponto</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriototalizadoratividade']"
+            target="_top"
+          >
+            Totalizador de atividades</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatoriotripulantesemponto']"
+            target="_top"
+          >
+            Tripulantes sem ponto</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/liberacao/relatorioviradaveiculo']"
+            target="_top"
+          >
+            Virada de veículos</a
+          >
+        </li>
+      </ul>
+    </li>
+
+    <!--MENU MODULO USUÁRIO-->
+    <li class="nav-divider"></li>
+    <li class="nav-title">Usuário</li>
+    <li class="nav-group"></li>
+    <li class="nav-group">
+      <a class="nav-link nav-group-toggle sub"
+        ><mat-icon class="nav-icon">person_add</mat-icon>Cadastros</a
+      >
+      <ul class="nav-group-items">
+        <li *ngIf="listaPermissao?.includes('U01')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/cadastrousuario']"
+            target="_top"
+          >
+            Cadastro de Usuário</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="listaPermissao?.includes('U04')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/cadastroperfil']"
+            target="_top"
+          >
+            Cadastro de Perfil</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="listaPermissao?.includes('U02')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/cadastrogrupo']"
+            target="_top"
+          >
+            Cadastro de Setor</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="listaPermissao?.includes('U08')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/cadastrousuariolocal']"
+            target="_top"
+          >
+            Cadastro de Acesso de Localidade</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-group">
+      <a class="nav-link nav-group-toggle sub" href="#"
+        ><mat-icon class="nav-icon">assignment</mat-icon>Relatórios</a
+      >
+      <ul class="nav-group-items">
+        <li class="nav-item" *ngIf="listaPermissao?.includes('RB3')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/relatoriologusuario']"
+            target="_top"
+          >
+            Relatório de Log de Usuário</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="listaPermissao?.includes('RC3')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/relatoriousuariofuncao']"
+            target="_top"
+          >
+          Relatório de Usuário/Função</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="listaPermissao?.includes('RB4')">
+          <a
+            class="nav-link"
+            [routerLink]="['/usuario/relatoriousuarioperfil']"
+            target="_top"
+          >
+            Relatório de Usuário/Perfil</a
+          >
+        </li>
+      </ul>
+    </li>
+    <li class="nav-divider"></li>
+    <li class="nav-title">Escala</li>
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle title"
+        ><mat-icon class="nav-icon disabled">map</mat-icon
+        >Escala</a
+      >
+      <ul class="nav-group-items"></ul>
+    </li>
+    <li class="nav-divider"></li>
+    <li class="nav-title">Coordenação</li>
+    <li class="nav-group">
+      <a class="nav-link disabled nav-group-toggle title"
+        ><mat-icon class="nav-icon disabled">dvr</mat-icon
+        >Coordenação</a
+      >
+      <ul class="nav-group-items"></ul>
+    </li>
+  </ul>
+  <button
+    class="sidebar-toggler"
+    type="button"
+    (click)="this.show()"
+    data-coreui-toggle="unfoldable"
+  ></button>
+</div>

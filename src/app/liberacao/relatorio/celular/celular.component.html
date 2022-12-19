@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-start">
+      <h4>Relatório de Celulares</h4>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="padding-bottom: 20px;">
+  <nav aria-label="breadcrumb">
+    <button type="button" class="btn btn-warning rounded-0 text-white" (click)="download()"><i
+        class="cil-save nav-icon"></i> Download</button>
+    <button class="btn btn-secondary rounded-0 text-white" type="button"><i class="cil-print nav-icon"></i>
+      Imprimir</button>
+  </nav>
+</div>
+<div class="container-fluid" style="padding-bottom: 20px;">
+  <div class="card">
+    <div class="card-header bg-success">
+      <h5 class="modal-title h4 text-white" id="modalOpen">Consulta</h5>
+    </div>
+    <div class="card-body">
+      <form class="row g-12" [formGroup]="registerForm">
+        <div class="col-md-3">
+          <label class="labelClass" for="name">Localização</label>
+          <select class="form-select" id="seqaeroporto_atual" formControlName="seqaeroporto_atual" placeholder="Local">
+            <option selected>Todos</option>
+            <option *ngFor="let selectLocal of selectLocais" [value]="selectLocal.seqaeroporto">{{selectLocal.codiata}}</option>
+          </select> 
+        </div>
+        <div class="col-md-3">
+          <label class="labelClass" for="name">Pendentes de Devolução</label>
+          <select class="form-select" id="flgsomentependentedev" formControlName="flgsomentependentedev">
+            <option selected>Todos</option>
+            <option value="S">Sim</option>
+            <option value="N">Não</option>
+          </select>
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight p-3">
+          <button [disabled]="registerForm.invalid" class="btn btn-success text-white" (click)="enviaPesquisa()" type="button" style="margin: 5px;">
+            <i class="cil-search nav-icon"></i> Consultar
+          </button>
+          <button class="btn btn-warning text-white" (click)="resetForm()" type="button" style="margin: 5px;">
+            <i class="cil-trash nav-icon"></i> Limpar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive table-condensed">
+        <div class="table-responsive table-condensed">
+          <mat-paginator [pageSize]="30" [pageSizeOptions]="[30, 40, 50, 60, 100]">
+          </mat-paginator>
+          <table mat-table [dataSource]="celulares" matSort class="table-responsive table-condensed">
+            <ng-container matColumnDef="imei">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Imei </th>
+              <td mat-cell *matCellDef="let element"> {{element.imei}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dtinicio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Inicio </th>
+              <td class="table-responsive" mat-cell *matCellDef="let element"> {{element.dtinicio | date :'dd-MM-YY hh:mm'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dtfim">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Fim </th>
+              <td mat-cell *matCellDef="let element"> {{element.dtfim | date :'dd-MM-YY hh:mm'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="localizacao_atual">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Localização Atual </th>
+              <td mat-cell *matCellDef="let element"> {{element.localizacao_atual}} </td>
+            </ng-container>
+            <ng-container matColumnDef="grupo_local_atual">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Grupo </th>
+              <td mat-cell *matCellDef="let element"> {{element.grupo_local_atual}} </td>
+            </ng-container>
+            <ng-container matColumnDef="matricula">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Matricula </th>
+              <td mat-cell *matCellDef="let element"> {{element.matricula}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nome">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+              <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nomeguerra">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome de Guerra </th>
+              <td mat-cell *matCellDef="let element"> {{element.nomeguerra}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nomebase">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Base </th>
+              <td mat-cell *matCellDef="let element"> {{element.nomebase}} </td>
+            </ng-container>
+            <ng-container matColumnDef="observacao">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Observação </th>
+              <td mat-cell *matCellDef="let element"> {{element.observacao}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dthralteracao">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Alteração </th>
+              <td mat-cell *matCellDef="let element"> {{element.dthralteracao | date :'dd-MM-YY hh:mm'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="local_entrega_prevista">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Local de Entrega </th>
+              <td mat-cell *matCellDef="let element"> {{element.local_entrega_prevista}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dthr_entrega_prevista">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Data de Entrega </th>
+              <td mat-cell *matCellDef="let element"> {{element.dthr_entrega_prevista | date :'dd-MM-YY hh:mm'}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="nomeColunas"></tr>
+            <tr mat-row *matRowDef="let row; columns: nomeColunas;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner></ngx-spinner>

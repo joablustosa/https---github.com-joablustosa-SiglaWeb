@@ -1,0 +1,205 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  width: 100% !important;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.mat-table {
+  overflow: hidden !important;
+  border-radius: 8px !important;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.example-tree .mat-nested-tree-node div[role=group] {
+  padding-left: 40px;
+}
+
+.example-tree div[role=group]>.mat-tree-node {
+  padding-left: 40px;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+mat-error {
+  margin-left: -10px;
+}
+
+::ng-deep .mat-ink-bar {
+  background-color: #2a9e51 !important;
+  height: 5px;
+}
+
+::ng-deep .mat-tab-labels .mat-tab-label-active {
+  font-weight: 900;
+}
+
+table {
+  width: 100%;
+}
+
+span {
+  font-size: 16px !important;
+}
+
+/* DONT CHANGE TAB LABEL COLOR AFTER CLICKING OUTSIDE THE TAB */
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  font-weight: 700;
+  color: #2a9e51;
+  opacity: 1;
+}
+
+/* MAT COLUMNS */
+/* profile */
+.mat-column-profileSelection {
+  width: 50px;
+  padding-right: 20px;
+  border-right: rgba(0, 0, 0, 0.1) solid 1px;
+  text-align: center;
+}
+
+.mat-column-profileDescription {
+  height: 35px;
+  cursor: pointer;
+  text-align: start;
+  padding-left: 20px;
+}
+
+/* module */
+.mat-column-moduleTitle {
+  width: 55%;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #2a9e51;
+}
+
+.mat-column-modulePermission {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #2a9e51;
+}
+
+/* Group Columns */
+.mat-column-groupTitle {
+  cursor: pointer;
+  width: 55%;
+  height: 30px;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mat-column-groupPermission {
+  background-color: rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Function Columns */
+.mat-column-functionTitle {
+  width: 55%;
+  height: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #ffffff;
+}
+
+.mat-column-functionPermission {
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* expanded */
+.mat-column-expandedDetail {
+  padding: 0 !important;
+  background-color: #00000015;
+}
+
+.mat-column-expandedDetail2 {
+  padding: 0 !important;
+  background-color: #00000015;
+}
+
+/* MAT HEADER */
+th.mat-header-cell {
+  color: white;
+  max-width: 200px;
+  background-color: #2a9e51;
+  font-size: 14px;
+}
+
+td {
+  width: 100%;
+}
+
+mat-icon {
+  vertical-align: sub !important;
+  color: #00000080;
+}
+
+.margin-header {
+  margin: 10px;
+  margin-bottom: -20px;
+}
+
+.mrb-text {
+  color: white;
+}
+
+tr.mat-row,
+tr.mat-footer-row {
+  height: initial;
+}
+
+:host ::ng-deep .mat-header-row {
+  height: 45px;
+}
+
+.mat-radio-button~.mat-radio-button {
+  margin-left: 10px;
+}
+
+.clickable {
+  cursor: pointer;
+}

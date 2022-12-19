@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start px-1">
+    <h2 class="">Cadastro de Acesso de Localidade</h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-6"></div>
+  </div>
+</div>
+<div class="body px-3">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white text-white-b px-3">
+          Gerenciar acesso das localidades
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Busca de Localidade</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  (keyup)="filtrar($event.target)"
+                  placeholder="Digite o usuario ou nome da localidade"
+                  name="classeSmart"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <mat-paginator [pageSize]="50" [pageSizeOptions]="[50, 100, 150]">
+          </mat-paginator>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Usuário localidade column -->
+            <ng-container matColumnDef="usuarioaerop">
+              <th mat-header-cell *matHeaderCellDef>Usuário</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.usuarioaerop }}
+              </td>
+            </ng-container>
+
+            <!-- Nome column -->
+            <ng-container matColumnDef="nome">
+              <th mat-header-cell *matHeaderCellDef>Nome</th>
+              <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+            </ng-container>
+
+            <!-- Flag altera column -->
+            <ng-container matColumnDef="flgaltera">
+              <th mat-header-cell *matHeaderCellDef>Senha inalterada</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon class="flagaltera">
+                  {{
+                    element.flgaltera == "S"
+                      ? "check_box"
+                      : "check_box_outline_blank"
+                  }}
+                </mat-icon>
+              </td>
+            </ng-container>
+
+            <!-- Alterar senha column -->
+            <ng-container matColumnDef="acoes">
+              <th mat-header-cell *matHeaderCellDef>Alterar senha</th>
+              <td mat-cell *matCellDef="let element">
+                <button
+                  class="btn btn-outline-warning btn-sm btn-noborder"
+                  matTooltip="Redefinir senha"
+                  type="button"
+                  (click)="resetaSenha(element, templateResetaSenha)"
+                >
+                  <mat-icon>lock</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="usuarioLocalColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: usuarioLocalColumns"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  bsModal
+  #templateResetaSenha="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="Cadastro"
+>
+  <!--MODAL PARA RESETAR SENHA-->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal">
+      <div class="modal-body bg-white border border-white">
+        <form [formGroup]="registerForm"></form>
+        <div class="col text-center">
+          <img
+            src="../../../../assets/img/Logo.png"
+            width="100px"
+            height="100px"
+          />
+        </div>
+        <div class="col text-center"><h1>ATENÇÃO</h1></div>
+        <div class="col text-center">
+          <h2 style="font-weight: 400">
+            A senha da localidade será redefinida para a senha padrão do
+            sistema.
+          </h2>
+        </div>
+      </div>
+      <div class="modal-footer d-flex bg-white justify-content-around">
+        <button
+          type="button"
+          class="btn btn-white btn-lg col"
+          (click)="templateResetaSenha.hide()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning btn-lg text-white col"
+          (click)="resetaSenhaSigUsuarios(templateResetaSenha)"
+        >
+          Redefinir senha
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-atom"
+>
+</ngx-spinner>

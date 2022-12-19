@@ -1,0 +1,147 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-start">
+    <div class="d-flex justify-content-start">
+      <h4>Relatório de Registros de Avaria em Celulares</h4>
+    </div>
+  </div>
+</div>
+<div class="container-fluid" style="padding-bottom: 20px;">
+  <nav aria-label="breadcrumb">
+    <button type="button" class="btn btn-warning rounded-0 text-white" (click)="download()"><i
+        class="cil-save nav-icon"></i> Download</button>
+    <button class="btn btn-secondary rounded-0 text-white" type="button"><i class="cil-print nav-icon"></i>
+      Imprimir</button>
+  </nav>
+</div>
+<div class="container-fluid" style="padding-bottom: 20px;">
+  <div class="card">
+    <div class="card-header bg-success">
+      <h5 class="modal-title h4 text-white" id="modalOpen">Consulta</h5>
+    </div>
+    <div class="card-body">
+      <form class="row g-12" [formGroup]="registerForm">
+        <div class="col-md-2">
+          <label class="labelClass" for="name">Data inicial</label>
+          <!-- <input class="form-control" id="dtoperini" type="text" formControlName="dtoperini" placeholder="Data Inicial" bsDatepicker [bsConfig]="{ isAnimated: true }" -->
+          <input class="form-control" id="dtoperini" type="date" formControlName="dtoperini" placeholder="Data Inicial"
+            [ngClass]="{'is-invalid': f.dtoperini.errors && f.dtoperini.touched}">
+          <div *ngIf="f.dtoperini.errors?.required" class="invalid-feedback">
+            Data obrigatória
+          </div>
+        </div>
+        <div class="col-md-2">
+          <label class="labelClass" for="name">Data final</label>
+          <!-- <input class="form-control" id="dtoperfim" type="text" formControlName="dtoperfim" placeholder="Data Final" bsDatepicker [bsConfig]="{ isAnimated: true }" -->
+          <input class="form-control" id="dtoperfim" type="date" formControlName="dtoperfim" placeholder="Data Final"
+            [ngClass]="{'is-invalid': f.dtoperfim.errors && f.dtoperfim.touched}">
+          <div *ngIf="f.dtoperfim.errors?.required" class="invalid-feedback">
+            Data obrigatória
+          </div>
+        </div>
+        <div class="col-md-2">
+            <label class="labelClass" for="name">Avaria Solucionada</label>
+            <select class="form-select" id="flgsolucionado" formControlName="flgsolucionado" placeholder="Local">
+                <option selected>Todos</option>
+                <option value="S">Sim</option>
+                <option value="N">Não</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+          <label class="labelClass" for="name">Localizador</label>
+          <input class="form-control" id="localizador" type="text" formControlName="localizador"
+            placeholder="Localizador" [ngClass]="{'is-invalid': f.localizador.errors && f.localizador.touched}">
+        </div>
+        <div class="col-md-2">
+          <label class="labelClass" for="name">Regional</label>
+          <select class="form-select" id="seqregional" formControlName="seqregional" placeholder="Local">
+            <option selected>Todos</option>
+            <option *ngFor="let selectRegional of selectRegionais" [value]="selectRegional.seqregional">
+              {{selectRegional.siglaregional}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="labelClass" for="name">NOP</label>
+          <select class="form-select" id="seqnop" formControlName="seqnop" placeholder="Local">
+            <option selected>Todos</option>
+            <option *ngFor="let selectNop of selectNops" [value]="selectNop.seqnop">{{selectNop.siglanop}}
+            </option>
+          </select>
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight p-3">
+          <button [disabled]="registerForm.invalid" class="btn btn-success text-white" (click)="enviaPesquisa()" type="button" style="margin: 5px;">
+            <i class="cil-search nav-icon"></i> Consultar
+          </button>
+          <button class="btn btn-warning text-white" (click)="resetForm()" type="button" style="margin: 5px;">
+            <i class="cil-trash nav-icon"></i> Limpar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive table-condensed">
+        <div class="table-responsive table-condensed">
+          <mat-paginator [pageSize]="30" [pageSizeOptions]="[30, 40, 50, 60, 100]">
+          </mat-paginator>
+          <table mat-table [dataSource]="avariasCelulares" matSort class="table-responsive table-condensed">
+            <ng-container matColumnDef="localizador">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Localizador </th>
+              <td mat-cell *matCellDef="let element"> {{element.localizador}} </td>
+            </ng-container>
+            <ng-container matColumnDef="descricaoavaria">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
+              <td class="table-responsive" mat-cell *matCellDef="let element"> {{element.descricaoavaria}} </td>
+            </ng-container>
+            <ng-container matColumnDef="matricula">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Motorista </th>
+              <td mat-cell *matCellDef="let element"> {{element.matricula}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nome">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+              <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dtresolucao">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Resolução </th>
+              <td mat-cell *matCellDef="let element"> {{element.dtresolucao | date :'dd-MM-YY hh:mm'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="observacao">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Observação </th>
+              <td mat-cell *matCellDef="let element"> {{element.observacao}} </td>
+            </ng-container>
+            <ng-container matColumnDef="usuario">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuário </th>
+              <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+            </ng-container>
+            <ng-container matColumnDef="dthralteracao">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Data Alteração </th>
+              <td mat-cell *matCellDef="let element"> {{element.dthralteracao | date :'dd-MM-YY hh:mm'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="siglaregional">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Sigla Regional </th>
+              <td mat-cell *matCellDef="let element"> {{element.siglaregional}} </td>
+            </ng-container>
+            <ng-container matColumnDef="descregional">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição Regional </th>
+              <td mat-cell *matCellDef="let element"> {{element.descregional}} </td>
+            </ng-container>
+            <ng-container matColumnDef="siglanop">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Sigla NOP </th>
+              <td mat-cell *matCellDef="let element"> {{element.siglanop}} </td>
+            </ng-container>
+            <ng-container matColumnDef="descrnop">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição NOP </th>
+              <td mat-cell *matCellDef="let element"> {{element.descrnop}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="nomeColunas"></tr>
+            <tr mat-row *matRowDef="let row; columns: nomeColunas;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner></ngx-spinner>
