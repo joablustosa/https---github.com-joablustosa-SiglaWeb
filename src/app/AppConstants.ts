@@ -1,7 +1,7 @@
 export class AppConstants{
 
-  // public static get baseServidor(): string { return "http://mplan01.infrananuvem.com.br:8099/" }
-  public static get baseServidor(): string { return "https://localhost:44311/" }
+  public static get baseServidor(): string { return "http://mplan01.infrananuvem.com.br:8099/" }
+  // public static get baseServidor(): string { return "https://localhost:44311/" }
 
   // Login
   public static get baseLogin(): string{ return this.baseServidor + 'api/Login/v1'}
